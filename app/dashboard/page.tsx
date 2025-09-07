@@ -3,6 +3,16 @@ import React, { useState } from 'react';
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState<'habits' | 'calendar' | 'streak' | 'create'>('habits');
+  const [habits, setHabits] = useState<string[]>(['Drink water', 'Stretch 1 min', 'Clean one thing']);
+  const [xp, setXp] = useState<number>(0);
+
+  const handleAddHabit = (habit: string) => {
+    if (!habits.includes(habit)) setHabits([...habits, habit]);
+  };
+
+  const handleMarkAsDone = () => {
+    setXp((prev) => Math.min(prev + 10, 100));
+  };
 
   const renderContent = () => {
     switch (activeTab) {
@@ -10,11 +20,17 @@ export default function Page() {
         return (
           <>
             <h2 style={styles.sectionTitle}>📋 List of Habits</h2>
+            <div style={styles.xpBarContainer}>
+              <div style={styles.xpLabel}>XP: {xp} / 100</div>
+              <div style={styles.xpBarBg}>
+                <div style={{ ...styles.xpBarFill, width: `${xp}%` }}></div>
+              </div>
+            </div>
             <div style={styles.cardGrid}>
-              {['Drink water', 'Stretch 1 min', 'Clean one thing'].map((habit, i) => (
+              {habits.map((habit, i) => (
                 <div key={i} style={styles.habitCard}>
                   <h4 style={styles.habitTitle}>{habit}</h4>
-                  <button style={styles.completeButton}>Mark as Done</button>
+                  <button style={styles.completeButton} onClick={handleMarkAsDone}>Mark as Done</button>
                 </div>
               ))}
             </div>
@@ -51,7 +67,7 @@ export default function Page() {
               {['Read 10 pages', 'Walk for 5 min', 'Meditate', 'Journal', 'Declutter 1 item'].map((habit, i) => (
                 <div key={i} style={styles.createHabitCard}>
                   <h4 style={styles.habitTitle}>{habit}</h4>
-                  <button style={styles.addButton}>Add Habit</button>
+                  <button style={styles.addButton} onClick={() => handleAddHabit(habit)}>Add Habit</button>
                 </div>
               ))}
             </div>
@@ -131,62 +147,68 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   content: {
     flex: 1,
-    padding: '2rem',
+    padding: '3rem 4rem',
   },
   sectionTitle: {
-    fontSize: '1.5rem',
-    fontWeight: 600,
-    marginBottom: '1.5rem',
+    fontSize: '2rem',
+    fontWeight: 700,
+    marginBottom: '2rem',
     color: '#cc5803',
   },
   cardGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-    gap: '1.5rem',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+    gap: '2rem',
   },
   habitCard: {
     backgroundColor: '#fff',
-    borderRadius: '12px',
-    padding: '1rem',
-    boxShadow: '0 2px 6px rgba(0,0,0,0.05)',
+    borderRadius: '16px',
+    padding: '1.5rem',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
     textAlign: 'center',
     border: '1px solid #f0e0d0',
+    transition: 'transform 0.2s ease',
   },
   createHabitCard: {
     backgroundColor: '#fffdf7',
-    borderRadius: '12px',
-    padding: '1rem',
-    boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
+    borderRadius: '16px',
+    padding: '1.5rem',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.06)',
     textAlign: 'center',
     border: '1px solid #f4dcb7',
+    transition: 'transform 0.2s ease',
   },
   habitTitle: {
-    fontSize: '1rem',
-    marginBottom: '0.75rem',
+    fontSize: '1.1rem',
+    marginBottom: '1rem',
     color: '#444',
   },
   completeButton: {
-    padding: '0.5rem 1rem',
+    padding: '0.6rem 1.25rem',
     backgroundColor: '#22c55e',
     color: '#fff',
     border: 'none',
-    borderRadius: '8px',
+    borderRadius: '10px',
     fontWeight: 600,
     cursor: 'pointer',
+    fontSize: '0.95rem',
+    transition: 'background 0.2s ease',
   },
   addButton: {
-    padding: '0.5rem 1rem',
+    padding: '0.6rem 1.25rem',
     backgroundColor: '#f97316',
     color: '#fff',
     border: 'none',
-    borderRadius: '8px',
+    borderRadius: '10px',
     fontWeight: 600,
     cursor: 'pointer',
+    fontSize: '0.95rem',
+    transition: 'background 0.2s ease',
   },
   input: {
     padding: '0.75rem',
     width: '100%',
-    borderRadius: '8px',
+    borderRadius: '10px',
     border: '1px solid #ccc',
     fontSize: '1rem',
     marginBottom: '1rem',
@@ -211,5 +233,25 @@ const styles: { [key: string]: React.CSSProperties } = {
   placeholder: {
     fontSize: '1rem',
     color: '#777',
+  },
+  xpBarContainer: {
+    marginBottom: '1.5rem',
+  },
+  xpLabel: {
+    fontSize: '0.95rem',
+    marginBottom: '0.25rem',
+    color: '#555',
+  },
+  xpBarBg: {
+    height: '12px',
+    width: '100%',
+    backgroundColor: '#fcd9b1',
+    borderRadius: '8px',
+    overflow: 'hidden',
+  },
+  xpBarFill: {
+    height: '100%',
+    backgroundColor: '#f97316',
+    transition: 'width 0.3s ease-in-out',
   },
 };
