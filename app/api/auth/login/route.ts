@@ -34,6 +34,7 @@ export async function POST(request: NextRequest) {
 
     if (passwordsMatch) {
       // Passwords match, user is authenticated
+      // TODO: Send a cookie to the user storing the
       return NextResponse.json(
         { message: 'Login successful!', userId: user.id },
         { status: 200 }

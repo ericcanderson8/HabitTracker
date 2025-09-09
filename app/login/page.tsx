@@ -1,16 +1,49 @@
 'use client';
-import React from 'react';
-import { useRouter } from 'next/navigation'; // ✅ Step 1: Import the router
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 
 export default function Page() {
- const router = useRouter(); // ✅ Step 2: Initialize the router
+  const router = useRouter(); // ✅ Step 2: Initialize the router
+ 
+  // Saved variables
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
+  // Create the submit handler
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
- // ✅ Step 3: Create the submit handler
- const handleSubmit = (e: React.FormEvent) => {
-   e.preventDefault();
-   router.push('/dashboard'); // Redirect to /dashboard
+    try {
+      // Send HTTP request with user data
+      const res = await fetch('/api/auth/login', {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 'identifier': email, password }),
+      })
+
+      // Get Server response
+      const data = await res.json();
+    
+      // Handle responses
+      switch (res.status) {
+        case 200: { // login successful
+          router.push("/dashboard")
+        }
+
+        case 400: { // Missing field
+
+        }
+
+        case 401: { // Invalid credentials
+
+        }
+        default: {}
+      }
+
+    } catch (err) {
+      console.log(err)
+    }
  };
 
 
@@ -82,6 +115,7 @@ export default function Page() {
              type="email"
              id="email"
              placeholder="you@example.com"
+             onChange={(e) => {setEmail(e.target.value)}}
              style={{
                width: '100%',
                padding: '0.75rem',
@@ -112,6 +146,7 @@ export default function Page() {
              type="password"
              id="password"
              placeholder="••••••••"
+             onChange={(e) => {setPassword(e.target.value)}}
              style={{
                width: '100%',
                padding: '0.75rem',
