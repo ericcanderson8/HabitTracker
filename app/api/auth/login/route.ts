@@ -2,6 +2,9 @@ import bcrypt from 'bcrypt';
 import { supabase } from '../../../lib/supabase';
 import { NextRequest, NextResponse } from 'next/server';
 
+import jwt from 'jsonwebtoken';
+
+
 export async function POST(request: NextRequest) {
   try {
     const { identifier, password } = await request.json();
@@ -18,6 +21,8 @@ export async function POST(request: NextRequest) {
       p_identifier: identifier,
     });
 
+
+
     if (error || !data || data.length === 0) {
       return NextResponse.json(
         { error: 'Invalid credentials' },
@@ -33,12 +38,24 @@ export async function POST(request: NextRequest) {
     const passwordsMatch = await bcrypt.compare(password, storedHashedPassword);
 
     if (passwordsMatch) {
+      if (!process.env.JWT_SECRET) {
+        throw new Error('JWT_SECRET is not defined');
+      }
+      const token = jwt.sign(
+        {userId: user.id },
+        process.env.JWT_SECRET!,
+        {expiresIn: '7d'}
+      )
       // Passwords match, user is authenticated
       // TODO: Send a cookie to the user storing the
-      return NextResponse.json(
-        { message: 'Login successful!', userId: user.id },
-        { status: 200 }
-      );
+      const response = NextResponse.json( { message: 'Login successful!'});
+      response.cookies.set('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        path: '/',
+        maxAge: 7 * 60 * 60 * 24, // 7 days
+      })
+      return response;
     } else {
       // Passwords do not match
       return NextResponse.json(

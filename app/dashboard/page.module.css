@@ -1,0 +1,163 @@
+.container {
+    display: flex;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fffaf4;
+  }
+  
+  .sidebar {
+    width: 220px;
+    background-color: #fff3e0;
+    padding: 2rem 1rem;
+    border-right: 1px solid #fcd9b1;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #cc5803;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .navItem {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: none;
+    text-align: left;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: transparent;
+    color: #333;
+    transition: background 0.2s ease-in-out;
+  }
+  
+  .activeNav {
+    background-color: #fef3c7;
+    font-weight: 600;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 3rem 4rem;
+  }
+  
+  .sectionTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #cc5803;
+  }
+  
+  .cardGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+  }
+  
+  .habitCard {
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    border: 1px solid #f0e0d0;
+    transition: transform 0.2s ease;
+  }
+  
+  .createHabitCard {
+    background-color: #fffdf7;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    text-align: center;
+    border: 1px solid #f4dcb7;
+    transition: transform 0.2s ease;
+  }
+  
+  .habitTitle {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #444;
+  }
+  
+  .completeButton {
+    padding: 0.6rem 1.25rem;
+    background-color: #22c55e;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.2s ease;
+  }
+  
+  .addButton {
+    padding: 0.6rem 1.25rem;
+    background-color: #f97316;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.2s ease;
+  }
+  
+  .streakCard {
+    background-color: #fff4e8;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid #fcd9b1;
+    text-align: center;
+  }
+  
+  .streakBig {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #f97316;
+    margin-bottom: 1rem;
+  }
+  
+  .streakSub {
+    font-size: 1rem;
+    color: #7c6f5f;
+  }
+  
+  .xpBarContainer {
+    margin-bottom: 1.5rem;
+  }
+  
+  .xpLabel {
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+    color: #555;
+  }
+  
+  .xpBarBg {
+    height: 12px;
+    width: 100%;
+    background-color: #fcd9b1;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .xpBarFill {
+    height: 100%;
+    background-color: #f97316;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  .calendar {
+    border: 0;
+    width: 100%;
+    height: 600px;
+    border-radius: 12px;
+  }
