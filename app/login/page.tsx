@@ -28,7 +28,7 @@ export default function Page() {
       // Handle responses
       switch (res.status) {
         case 200: { // login successful
-          router.push("/dashboard")
+          router.push("/user/dashboard")
         }
 
         case 400: { // Missing field

@@ -1,21 +1,26 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
-// This function can be marked `async` if using `await` inside
-export function middleware() {
-  // Add any middleware logic here if needed
+import jwt from 'jsonwebtoken'
+
+export function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+
+  if (pathname.startsWith("/user")) {
+    let token = req.cookies.get('token')?.value
+
+    if (!token) {
+      return NextResponse.redirect("/login")
+    }
+
+    let decoded = jwt.verify(token, process.env.JWT_SECRET!)
+  }
+
   return NextResponse.next()
 }
 
-// See "Matching Paths" below to learn more
+
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    '/user/:path*'
   ],
 }
