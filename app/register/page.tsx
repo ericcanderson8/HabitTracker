@@ -5,11 +5,26 @@ import { useRouter } from 'next/navigation';
 export default function RegisterPage() {
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
+    const res = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+
+    if (res.ok) {
+      alert("Account created successfully!");
+      router.push("/login");
+    } else {
+      const error = await res.json();
+      alert(error.message ||"Error creating account. Please try again.");
+    }
     // Here you can handle form submission logic (e.g., API call)
-    alert('Account created successfully!');
-    router.push('/login');
   };
 
   return (
@@ -48,16 +63,16 @@ export default function RegisterPage() {
 
         <form onSubmit={handleSubmit}>
           <label style={styles.label}>First Name</label>
-          <input type="text" required style={styles.input} />
+          <input name="firstName" type="text" required style={styles.input} />
 
           <label style={styles.label}>Last Name</label>
-          <input type="text" required style={styles.input} />
+          <input name="lastName" type="text" required style={styles.input} />
 
           <label style={styles.label}>Email</label>
-          <input type="email" required style={styles.input} />
+          <input name="email" type="email" required style={styles.input} />
 
           <label style={styles.label}>Password</label>
-          <input type="password" required style={styles.input} />
+          <input name="password"type="password" required style={styles.input} />
 
           <button type="submit" style={styles.submitButton}>Sign Up</button>
 

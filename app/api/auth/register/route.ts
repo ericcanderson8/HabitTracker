@@ -4,9 +4,9 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, username, password } = await request.json();
-
-    if (!email || !username || !password) {
+    const { email, password, firstName, lastName } = await request.json();
+    console.log(email, password, firstName, lastName)
+    if (!email || !password || !firstName || !lastName) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -20,7 +20,8 @@ export async function POST(request: NextRequest) {
     // Make sure to use the service role key for this action
     const { error } = await supabase.rpc('register_user', {
       p_email: email,
-      p_username: username,
+      p_first_name: firstName,
+      p_last_name: lastName,
       p_password_hash: hashedPassword,
     });
 

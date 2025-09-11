@@ -3,11 +3,11 @@ import { NextRequest, NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
 
 export function middleware(req: NextRequest) {
-  let url = req.nextUrl;
+  const url = req.nextUrl;
 
   // If on a user page, make sure a user session is active
   if (url.pathname.startsWith("/user")) {
-    let token = req.cookies.get('token')?.value
+    const token = req.cookies.get('token')?.value
 
     // Check if token exists
     if (!token) {

@@ -2,8 +2,6 @@
 import React, { useState } from 'react';
 import styles from './page.module.css';
 
-import verifySession from './session_verify'
-
 export default function Page() {
   const [activeTab, setActiveTab] = useState<'habits' | 'calendar' | 'streak' | 'create'>('habits');
   const [habits, setHabits] = useState<string[]>(['Drink water', 'Stretch 1 min', 'Clean one thing']);
@@ -61,7 +59,7 @@ export default function Page() {
             <div className={styles.streakCard}>
               <p className={styles.streakBig}>🔥 4-Day Streak</p>
               <p className={styles.streakSub}>
-                You're doing amazing! Keep your streak alive by completing at least one habit today.
+                You are doing amazing! Keep your streak alive by completing at least one habit today.
               </p>
             </div>
           </>
@@ -100,7 +98,7 @@ export default function Page() {
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
+              onClick={() => setActiveTab(tab.id as 'habits' | 'calendar' | 'streak' | 'create')}
               className={`${styles.navItem} ${activeTab === tab.id ? styles.activeNav : ''}`}
             >
               {tab.label}

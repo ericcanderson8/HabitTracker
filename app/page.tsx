@@ -10,6 +10,25 @@ export default function Home() {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const login = async () => {
+    // call api/me
+    try {
+      const res = await fetch("/api/me", {
+        method: "GET",
+        credentials: "include",
+      
+      })
+      if (res.status === 401) {
+        router.push("/login")
+      } else {
+        router.push("/user/dashboard")
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  };
+
+
   return (
     <main style={{ fontFamily: 'Segoe UI, sans-serif', backgroundColor: '#fffaf4', minHeight: '100vh' }}>
       {/* Top Navigation Bar */}
@@ -49,7 +68,7 @@ export default function Home() {
             ))}
           </nav>
           <button
-            onClick={() => router.push('/login')}
+            onClick={login}
             style={{
               padding: '0.5rem 1rem',
               backgroundColor: '#cc5803',
