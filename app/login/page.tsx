@@ -5,24 +5,20 @@ import { useRouter } from 'next/navigation';
 export default function Page() {
   const router = useRouter(); // ✅ Step 2: Initialize the router
 
-  // Saved variables
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   // Create the submit handler
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
 
     try {
       // Send HTTP request with user data
       const res = await fetch('/api/auth/login', {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 'identifier': email, password }),
+        body: JSON.stringify(data),
       })
-
-      // Get Server response
-      const data = await res.json();
 
       // Handle responses
       switch (res.status) {
@@ -109,10 +105,10 @@ export default function Page() {
               Email address
             </label>
             <input
+              name="email"
               type="email"
               id="email"
               placeholder="you@example.com"
-              onChange={(e) => { setEmail(e.target.value) }}
               style={{
                 width: '100%',
                 padding: '0.75rem',
@@ -139,10 +135,10 @@ export default function Page() {
               Password
             </label>
             <input
+              name="password"
               type="password"
               id="password"
               placeholder="••••••••"
-              onChange={(e) => { setPassword(e.target.value) }}
               style={{
                 width: '100%',
                 padding: '0.75rem',

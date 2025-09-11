@@ -7,9 +7,9 @@ import jwt from 'jsonwebtoken';
 
 export async function POST(request: NextRequest) {
   try {
-    const { identifier, password } = await request.json();
+    const { email, password } = await request.json();
 
-    if (!identifier || !password) {
+    if (!email || !password) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -18,10 +18,8 @@ export async function POST(request: NextRequest) {
 
     // Call the PostgreSQL stored procedure to retrieve the user's password hash
     const { data, error } = await supabase.rpc('get_user_password_hash', {
-      p_identifier: identifier,
+      p_identifier: email,
     });
-
-
 
     if (error || !data || data.length === 0) {
       return NextResponse.json(

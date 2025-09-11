@@ -8,21 +8,24 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // Get form data
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
 
+    // HTTP request
     const res = await fetch('/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
 
+    // Analyze response
     if (res.ok) {
       alert("Account created successfully!");
       router.push("/login");
     } else {
       const error = await res.json();
-      alert(error.message ||"Error creating account. Please try again.");
+      alert(error.message || "Error creating account. Please try again.");
     }
     // Here you can handle form submission logic (e.g., API call)
   };
@@ -72,7 +75,7 @@ export default function RegisterPage() {
           <input name="email" type="email" required style={styles.input} />
 
           <label style={styles.label}>Password</label>
-          <input name="password"type="password" required style={styles.input} />
+          <input name="password" type="password" required style={styles.input} />
 
           <button type="submit" style={styles.submitButton}>Sign Up</button>
 
