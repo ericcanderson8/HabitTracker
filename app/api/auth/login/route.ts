@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
       const token = jwt.sign(
         {userId: user.id },
         process.env.JWT_SECRET!,
-        {expiresIn: '7d'}
+        {expiresIn: '2h'}
       )
       // Passwords match, user is authenticated
       // TODO: Send a cookie to the user storing the

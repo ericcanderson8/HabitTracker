@@ -3,17 +3,25 @@ import { NextRequest, NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
 
 export function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl;
+  let url = req.nextUrl;
 
   // If on a user page, make sure a user session is active
-  if (pathname.startsWith("/user")) {
+  if (url.pathname.startsWith("/user")) {
     let token = req.cookies.get('token')?.value
 
+    // Check if token exists
     if (!token) {
-      return NextResponse.redirect("/login")
+      url.pathname = "/login"
+      return NextResponse.redirect(url)
     }
 
-    let decoded = jwt.verify(token, process.env.JWT_SECRET!)
+    // Check validity of token
+    try {
+      jwt.verify(token, process.env.JWT_SECRET!)
+    } catch (e) {
+      url.pathname = "/login"
+      return NextResponse.rewrite(url)
+    }
   }
 
   return NextResponse.next()
