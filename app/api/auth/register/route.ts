@@ -5,7 +5,6 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   try {
     const { email, password, firstName, lastName } = await request.json();
-    console.log(email, password, firstName, lastName)
     if (!email || !password || !firstName || !lastName) {
       return NextResponse.json(
         { error: 'Missing required fields' },
