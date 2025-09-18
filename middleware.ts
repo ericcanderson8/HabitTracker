@@ -31,6 +31,7 @@ export function middleware(req: NextRequest) {
 export const config = {
   runtime: "nodejs",
   matcher: [
-    '/user/:path*'
+    '/user/:path*',
+    '/api/:path*',
   ],
 }
