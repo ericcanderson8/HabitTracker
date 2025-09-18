@@ -10,7 +10,7 @@ export function verifySession(token: string | undefined) {
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET)
-        return { verified: true, user: decoded}
+        return { verified: true, user: decoded }
     } catch {
         return { verified: false }
     }
