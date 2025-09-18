@@ -1,34 +1,44 @@
+// __tests__/register.test.ts
+
 import request from 'supertest';
 
 // Replace with the URL of your local Next.js dev server
-const app = 'http://localhost:3001';
+const app = 'http://localhost:3000';
 
-describe('POST /api/register', () => {
+describe('POST /api/auth/register', () => {
 
   it('should successfully register a new user', async () => {
+    // 1. Adjusted fields to match your new route
     const newUser = {
       email: `test-${Date.now()}@example.com`,
-      username: `testuser-${Date.now()}`,
+      firstName: `test-${Date.now()}`,
+      lastName: `user`,
       password: 'Password123!',
     };
 
     const res = await request(app)
-      .post('/api/auth/register')
+      // CORRECTED: Changed endpoint to /api/auth/register
+      .post('/api/auth/register') 
       .send(newUser)
       .expect(201); // Expect a 201 Created status code
 
-    // Further assertions on the response body
+    // 3. Updated expected response body
     expect(res.body).toEqual({ message: 'User registered successfully!' });
   });
 
   it('should return a 409 error for a duplicate email', async () => {
-    // First, register a user to ensure a duplicate exists
+    // Register a new user with a unique email for this test
+    const duplicateEmail = `duplicate-${Date.now()}@example.com`;
     const existingUser = {
-      email: 'duplicate@example.com',
-      username: 'duplicateuser',
+      email: duplicateEmail,
+      firstName: 'Duplicate',
+      lastName: 'Test',
       password: 'Password123!',
     };
+
+    // First, register a user to ensure a duplicate exists
     await request(app)
+      // CORRECTED: Changed endpoint to /api/auth/register
       .post('/api/auth/register')
       .send(existingUser)
       .expect(201);
@@ -37,8 +47,10 @@ describe('POST /api/register', () => {
     const res = await request(app)
       .post('/api/auth/register')
       .send({
-        ...existingUser,
-        username: 'anotherusername', // Change username to isolate email duplicate error
+        email: duplicateEmail,
+        firstName: 'Another',
+        lastName: 'User',
+        password: 'AnotherPassword123!',
       })
       .expect(409); // Expect a 409 Conflict status code
 
@@ -47,17 +59,17 @@ describe('POST /api/register', () => {
   });
 
   it('should return a 400 error for missing fields', async () => {
+    // Missing 'email', 'firstName', and 'lastName' fields
     const incompleteUser = {
-      username: 'incompleteuser',
       password: 'Password123!',
     };
 
     const res = await request(app)
+      // CORRECTED: Changed endpoint to /api/auth/register
       .post('/api/auth/register')
       .send(incompleteUser)
       .expect(400); // Expect a 400 Bad Request status code
 
     expect(res.body).toEqual({ error: 'Missing required fields' });
   });
-
 });
