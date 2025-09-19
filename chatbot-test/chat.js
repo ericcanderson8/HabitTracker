@@ -43,5 +43,4 @@ const testChatbot = async (prompt) => {
 
 // You can call the function with any prompt you want to test.
 const testPrompt = "";
-callLogoutAPI();
 testChatbot(testPrompt);

@@ -10,11 +10,12 @@ export async function POST(request: Request) {
         const { messages } = await request.json();
         // 2. Make the API call to OpenAI
 
-        console.log(messages)
 
         const systemMessage = {
             role: "system",
-            content: 'You are a helpful assistant, that breakdown large complex tasks into bite-size tasks, your first goal is to break it into daily tasks you can do everyday to make progress towards your goal these tasks these should be about an hour long and label them, please do not answer any other questions and just say your are here to help people complete their goals and aspirations, label the amount of time it would take to do each task estimate'
+            content: `You are a helpful assistant, you will give advice on good habits, and ways of achieving goals.
+             When a user presents a large goal break it into smaller chunks for a user to accomplish.
+            `
         }
 
         const toApi = [systemMessage, ...messages]
