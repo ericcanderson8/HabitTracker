@@ -63,7 +63,22 @@
     border-radius: 3rem;
     margin-bottom: 0.5rem;
     margin-left: 1rem;
-    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+  }
+
+  .botMessages button {
+    margin-top: 0.5rem;
+    background-color: #34a0a4;
+    color: #fff;
+    border: none;
+    padding: 1px;
+    font-size: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 7rem;
+    align-self: center;
   }
   
   .userMessages {
@@ -116,20 +131,102 @@
     cursor: pointer;
   }
 
+  .behindPopup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+  }
+
   .popup {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 50%;
-    height: 50%;
+    flex: 1;
     border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: #b5e48c;
+    padding: 20px;
+    padding-top: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+
+    /* Flexbox properties*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #34a0a4;
   }
+
+  .popup h1{
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .popup button {
+    background-color: #34a0a4;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
   
-  
-  
-  
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  /* zebra striping */
+  .table tbody tr:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  /* column alignment */
+  .table th:nth-child(1),
+.table td:nth-child(1) {
+  text-align: left;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+  text-align: left;
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+  text-align: right;
+}
+
+/* subtle border spacing and borders */
+.table td {
+  padding: 0.5rem 1rem;
+}
+
+.table th {
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid #34a0a4;
+}
+
+/* highlight on however */
+.table tbody tr:hover {
+  background-color: rgba(52, 160, 164, 0.1);
+  cursor: pointer;
+}
+  /* .table th,
+  .table td {
+    border: 1.5px solid black;
+  } */
+
+
+
+
   
   
   
