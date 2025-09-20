@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect, useRef} from 'react';
 import styles from './page.module.css';
+import Sidebar from '@/app/components/sidebar';
 
 // popup schedule 
 
@@ -91,6 +92,7 @@ export default function Page() {
     console.log(messages);
     return (
         <>
+        <Sidebar />
         {popup && 
             <div className={styles.behindPopup} onClick={() => setPopup(false)}>
                 <div className={styles.popup} onClick={e => e.stopPropagation()}>
