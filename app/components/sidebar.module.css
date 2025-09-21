@@ -1,49 +1,73 @@
 /* sidebar.module.css */
+
+/* Use the same CSS variables from your main stylesheet for consistency */
+:root {
+  --background-color: #0D1117;
+  --surface-color: #161B22;
+  --primary-text-color: #E6EDF3;
+  --accent-color: #007BFF;
+  --border-color: #30363D;
+}
+
 .sidebar {
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
-  left: 4rem;
+  left: 2rem; /* Adjusted for a closer fit */
   width: 160px;
   height: auto;
-  background-color: #94d88e;
+  
+  /* Applying the dark theme colors */
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  
   padding: 2rem 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  
+  /* A subtle "glow" effect matching the modern theme */
+  box-shadow: 0 0 25px rgba(0, 123, 255, 0.1);
+  
   z-index: 2;
   transition: all 0.3s ease;
 }
 
 /* Container for the navigation links */
 .navList {
-  list-style: none; /* Removes bullet points */
+  list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; /* Increased space between links */
+  gap: 1rem; /* Slightly reduced gap for a tighter look */
 }
 
 /* Style for each link item */
 .navLink {
-  color: #ffffff; /* Dark, low-saturation green for text */
-  text-decoration: none; /* Removes the underline */
-  font-size: 1.1rem; /* Larger, more readable font */
-  font-weight: 500; /* Medium weight for clarity */
-  padding: 10px 15px; /* Adds clickable area */
-  border-radius: 8px; /* Rounded corners for the hover effect */
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-  display: block; /* Makes the entire padded area clickable */
+  color: var(--primary-text-color);
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  display: block;
 }
 
 /* Hover effect for links */
 .navLink:hover {
-  background-color: #a8e6a3; /* Lighter green on hover */
-  color: #0c1a0c;
+  background-color: rgba(0, 123, 255, 0.1); /* Faint blue background on hover */
+  color: var(--accent-color); /* Text becomes vibrant blue on hover */
 }
 
 /* Style for the active link */
 .activeLink {
-  background-color: rgba(255, 255, 255, 0.2);
-  font-weight: 700; /* Bold active link */
+  background-color: var(--accent-color); /* Solid vibrant blue background */
+  color: #FFFFFF; /* White text for high contrast */
+  font-weight: 700;
+}
+
+/* Ensure the active link's hover state doesn't change */
+.activeLink:hover {
+  background-color: var(--accent-color);
+  color: #FFFFFF;
 }

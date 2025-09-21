@@ -5,8 +5,8 @@ import { usePathname } from 'next/navigation'; // Correct import
 import styles from './sidebar.module.css';
 
 const navItems = [
-  { href: '/', label: 'Home' },
   { href: '/user/dashboard', label: 'Dashboard' },
+  { href: '/user/today', label: 'Today' },
   { href: '/user/chatbot', label: 'Chatbot' },
   { href: '/contact', label: 'Contact' },
 ];
