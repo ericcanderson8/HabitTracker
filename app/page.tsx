@@ -1,8 +1,6 @@
 'use client'
 import React from 'react';
-
 import { onSignInClicked } from './actions';
-
 
 export default function Home() {
   const scrollTo = (id: string) => {
@@ -11,15 +9,14 @@ export default function Home() {
   };
 
   return (
-    <main style={{ fontFamily: 'Segoe UI, sans-serif', backgroundColor: '#fffaf4', minHeight: '100vh' }}>
+    <main style={{ fontFamily: 'Segoe UI, sans-serif', backgroundColor: '#0D1117', minHeight: '100vh' }}>
       {/* Top Navigation Bar */}
       <header
         style={{
           width: '100%',
-          backgroundColor: '#ffffffdd',
-          backdropFilter: 'blur(12px)',
+          backgroundColor: '#161B22',
           padding: '1rem 3rem',
-          borderBottom: '1px solid #eee',
+          borderBottom: '1px solid #30363D',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -28,7 +25,9 @@ export default function Home() {
           zIndex: 100,
         }}
       >
-        <h1 style={{ fontSize: '1.75rem', fontWeight: 700, color: '#cc5803', letterSpacing: '0.5px' }}>1MinHabit</h1>
+        <h1 style={{ fontSize: '1.75rem', fontWeight: 700, color: '#E6EDF3', letterSpacing: '0.5px' }}>
+          🔷 1MinHabit
+        </h1>
         <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
           <nav style={{ display: 'flex', gap: '1.5rem' }}>
             {['Home', 'About', 'Features', 'Contact'].map((label) => (
@@ -39,7 +38,7 @@ export default function Home() {
                   background: 'none',
                   border: 'none',
                   fontSize: '1rem',
-                  color: '#333',
+                  color: '#E6EDF3',
                   cursor: 'pointer',
                   fontWeight: 500,
                 }}
@@ -52,8 +51,8 @@ export default function Home() {
             onClick={onSignInClicked}
             style={{
               padding: '0.5rem 1rem',
-              backgroundColor: '#cc5803',
-              color: '#fff',
+              backgroundColor: '#007BFF',
+              color: '#FFFFFF',
               border: 'none',
               borderRadius: '6px',
               fontWeight: 600,
@@ -67,8 +66,8 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section id="home" style={{ ...sectionStyle, paddingTop: '5rem', backgroundColor: '#fff' }}>
-        <h2 style={{ fontSize: '2.5rem', color: '#cc5803', marginBottom: '1rem' }}>Welcome to 1MinHabit</h2>
+      <section id="home" style={{ ...sectionStyle, paddingTop: '5rem', backgroundColor: '#0D1117', color: '#E6EDF3' }}>
+        <h2 style={{ fontSize: '2.5rem', color: '#E6EDF3', marginBottom: '1rem' }}>Welcome to 1MinHabit</h2>
         <p style={paragraphStyle}>
           A focused habit-building platform that helps you grow <strong>1 minute at a time</strong>. Track your
           progress, earn rewards, and stay consistent without the overwhelm.
@@ -78,14 +77,14 @@ export default function Home() {
           style={{
             marginTop: '1.5rem',
             padding: '0.75rem 1.5rem',
-            backgroundColor: '#f97316',
+            backgroundColor: '#007BFF',
             color: '#fff',
             fontWeight: 600,
             border: 'none',
             borderRadius: '8px',
             fontSize: '1rem',
             cursor: 'pointer',
-            boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
           }}
         >
           Learn More
@@ -93,8 +92,8 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about" style={{ ...sectionStyle, backgroundColor: '#fdf7ef', textAlign: 'left' }}>
-        <h3 style={{ ...headingStyle, textAlign: 'left' }}>📖 About</h3>
+      <section id="about" style={{ ...sectionStyle, backgroundColor: '#161B22', textAlign: 'left', color: '#E6EDF3' }}>
+        <h3 style={{ ...headingStyle, textAlign: 'left', color: '#E6EDF3' }}>📖 About</h3>
         <p style={paragraphStyle}>
           1MinHabit is designed to help users — especially those with busy schedules — start building habits
           with simplicity. By focusing on quick, achievable actions, we eliminate the resistance to starting.
@@ -109,8 +108,8 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section id="features" style={{ ...sectionStyle, textAlign: 'left' }}>
-        <h3 style={{ ...headingStyle, textAlign: 'left' }}>🚀 Features</h3>
+      <section id="features" style={{ ...sectionStyle, textAlign: 'left', backgroundColor: '#0D1117', color: '#E6EDF3' }}>
+        <h3 style={{ ...headingStyle, textAlign: 'left', color: '#E6EDF3' }}>🚀 Features</h3>
         <ul style={{ ...paragraphStyle, paddingLeft: '1.5rem', listStyle: 'disc', maxWidth: '720px', margin: '0 auto' }}>
           <li>✔ Micro-habit prompts tailored to your focus areas</li>
           <li>✔ XP, level-ups, and badge rewards</li>
@@ -120,7 +119,7 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" style={{ ...sectionStyle, backgroundColor: '#fdf7ef', paddingBottom: '6rem' }}>
+      <section id="contact" style={{ ...sectionStyle, backgroundColor: '#161B22', paddingBottom: '6rem', color: '#E6EDF3' }}>
         <h3 style={headingStyle}>📬 Contact</h3>
         <p style={paragraphStyle}>Want to connect or share feedback?</p>
         <p style={paragraphStyle}>
@@ -147,20 +146,20 @@ const sectionStyle: React.CSSProperties = {
 
 const headingStyle: React.CSSProperties = {
   fontSize: '2rem',
-  color: '#cc5803',
+  color: '#E6EDF3',
   marginBottom: '1.5rem',
   fontWeight: 700,
 };
 
 const paragraphStyle: React.CSSProperties = {
   fontSize: '1.1rem',
-  color: '#444',
+  color: '#E6EDF3',
   lineHeight: 1.75,
   marginBottom: '1.5rem',
 };
 
 const linkStyle: React.CSSProperties = {
-  color: '#cc5803',
+  color: '#007BFF',
   textDecoration: 'underline',
   fontWeight: 500,
 };

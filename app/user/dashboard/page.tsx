@@ -169,7 +169,7 @@ export default function Page() {
     <main className={styles.container}>
       <div className={styles.topRightCoins}>💰 {coins}</div>
       <aside className={styles.sidebar}>
-        <h1 className={styles.logo}>🟧 1MinHabit</h1>
+        <h1 className={styles.logo}>🔷 1MinHabit</h1>
         <nav className={styles.nav}>
           {[
             { id: 'habits', label: 'Habits' },

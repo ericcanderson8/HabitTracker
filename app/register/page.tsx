@@ -19,7 +19,6 @@ export default function RegisterPage() {
       body: JSON.stringify(data),
     });
 
-    // Analyze response
     if (res.ok) {
       alert("Account created successfully!");
       router.push("/login");
@@ -27,7 +26,6 @@ export default function RegisterPage() {
       const error = await res.json();
       alert(error.message || "Error creating account. Please try again.");
     }
-    // Here you can handle form submission logic (e.g., API call)
   };
 
   return (
@@ -38,18 +36,19 @@ export default function RegisterPage() {
         justifyContent: 'center',
         alignItems: 'center',
         fontFamily: 'Segoe UI, sans-serif',
-        backgroundColor: '#fffaf4',
+        backgroundColor: '#0D1117', // dark theme background
         padding: '2rem',
       }}
     >
       <div
         style={{
-          backgroundColor: '#ffffff',
+          backgroundColor: '#161B22', // panel color
           padding: '3rem',
           borderRadius: '16px',
-          boxShadow: '0 12px 30px rgba(0, 0, 0, 0.08)',
+          boxShadow: '0 12px 30px rgba(0, 0, 0, 0.3)',
           width: '100%',
           maxWidth: '420px',
+          border: '1px solid #30363D',
         }}
       >
         <h1
@@ -57,7 +56,7 @@ export default function RegisterPage() {
             fontSize: '1.75rem',
             fontWeight: 700,
             marginBottom: '1rem',
-            color: '#cc5803',
+            color: '#E6EDF3', // bright text
             textAlign: 'center',
           }}
         >
@@ -79,9 +78,9 @@ export default function RegisterPage() {
 
           <button type="submit" style={styles.submitButton}>Sign Up</button>
 
-          <p style={{ fontSize: '0.85rem', color: '#7c6f5f', marginTop: '1.5rem', textAlign: 'center' }}>
+          <p style={{ fontSize: '0.85rem', color: '#8B949E', marginTop: '1.5rem', textAlign: 'center' }}>
             Already have an account?{' '}
-            <a href="/login" style={{ color: '#ea580c', textDecoration: 'none' }}>Log in</a>
+            <a href="/login" style={{ color: '#007BFF', textDecoration: 'none' }}>Log in</a>
           </p>
         </form>
       </div>
@@ -94,22 +93,24 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: 'block',
     marginBottom: '0.5rem',
     fontWeight: 600,
-    color: '#6b4f3f',
+    color: '#E6EDF3', // bright text
     fontSize: '0.9rem',
   },
   input: {
     width: '100%',
     padding: '0.75rem',
     borderRadius: '10px',
-    border: '1px solid #e0c3a7',
+    border: '1px solid #30363D',
     fontSize: '1rem',
     marginBottom: '1.5rem',
-    outlineColor: '#f97316',
+    backgroundColor: '#0D1117',
+    color: '#E6EDF3',
+    outlineColor: '#007BFF',
   },
   submitButton: {
     width: '100%',
-    backgroundColor: '#f97316',
-    color: '#ffffff',
+    backgroundColor: '#007BFF', // blue button
+    color: '#FFFFFF',
     padding: '0.75rem',
     fontSize: '1rem',
     fontWeight: 600,
