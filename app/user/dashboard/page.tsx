@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import Link from 'next/link';
 import styles from './page.module.css';
 
 interface Habit {
@@ -58,9 +59,14 @@ export default function Page() {
           <>
             <h2 className={styles.sectionTitle}>📋 List of Habits</h2>
             <div className={styles.xpBarContainer}>
-              <div className={styles.xpLabel}>XP: {xp} / {Math.pow(2, level - 1) * 100} (Level {level})</div>
+              <div className={styles.xpLabel}>
+                XP: {xp} / {Math.pow(2, level - 1) * 100} (Level {level})
+              </div>
               <div className={styles.xpBarBg}>
-                <div className={styles.xpBarFill} style={{ width: `${(xp / (Math.pow(2, level - 1) * 100)) * 100}%` }}></div>
+                <div
+                  className={styles.xpBarFill}
+                  style={{ width: `${(xp / (Math.pow(2, level - 1) * 100)) * 100}%` }}
+                ></div>
               </div>
             </div>
             <div className={styles.cardGrid}>
@@ -69,7 +75,12 @@ export default function Page() {
                   <summary className={styles.habitTitle}>{habit.title}</summary>
                   <p className={styles.habitDesc}>{habit.description}</p>
                   <p className={styles.coinsText}>💰 +{habit.coins} Coins</p>
-                  <button className={styles.completeButton} onClick={() => handleMarkAsDone(habit)}>Mark as Done</button>
+                  <button
+                    className={styles.completeButton}
+                    onClick={() => handleMarkAsDone(habit)}
+                  >
+                    Mark as Done
+                  </button>
                 </details>
               ))}
             </div>
@@ -78,7 +89,9 @@ export default function Page() {
                 <div className={styles.popupBox}>
                   <h2>🎉 Level Up!</h2>
                   <p>Congratulations! You've reached Level {level}!</p>
-                  <button className={styles.completeButton} onClick={() => setShowPopup(false)}>Close</button>
+                  <button className={styles.completeButton} onClick={() => setShowPopup(false)}>
+                    Close
+                  </button>
                 </div>
               </div>
             )}
@@ -103,7 +116,9 @@ export default function Page() {
             <h2 className={styles.sectionTitle}>🔥 Current Streak</h2>
             <div className={styles.streakCard}>
               <p className={styles.streakBig}>🔥 4-Day Streak</p>
-              <p className={styles.streakSub}>Keep your streak alive by completing at least one habit today.</p>
+              <p className={styles.streakSub}>
+                Keep your streak alive by completing at least one habit today.
+              </p>
             </div>
           </>
         );
@@ -118,13 +133,15 @@ export default function Page() {
                 { title: 'Meditate', description: 'Calm your mind and reduce anxiety.', coins: 5 },
                 { title: 'Journal', description: 'Reflect and process your thoughts in writing.', coins: 5 },
                 { title: 'Declutter 1 item', description: 'Improve your space and sense of control.', coins: 5 },
-                ...customHabits
+                ...customHabits,
               ].map((habit, i) => (
                 <div key={i} className={styles.createHabitCard}>
                   <h4 className={styles.habitTitle}>{habit.title}</h4>
                   <p className={styles.habitDesc}>{habit.description}</p>
                   <p className={styles.coinsText}>💰 {habit.coins} Coins</p>
-                  <button className={styles.addButton} onClick={() => handleAddHabit(habit)}>Add Habit</button>
+                  <button className={styles.addButton} onClick={() => handleAddHabit(habit)}>
+                    Add Habit
+                  </button>
                 </div>
               ))}
             </div>
@@ -171,21 +188,41 @@ export default function Page() {
       <aside className={styles.sidebar}>
         <h1 className={styles.logo}>🔷 1MinHabit</h1>
         <nav className={styles.nav}>
-          {[
-            { id: 'habits', label: 'Habits' },
-            { id: 'calendar', label: 'Calendar' },
-            { id: 'streak', label: 'Streak' },
-            { id: 'create', label: 'New Habit' },
-            { id: 'friend', label: 'Habit Friend' }
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as typeof activeTab)}
-              className={`${styles.navItem} ${activeTab === tab.id ? styles.activeNav : ''}`}
-            >
-              {tab.label}
-            </button>
-          ))}
+          <button
+            onClick={() => setActiveTab('habits')}
+            className={`${styles.navItem} ${activeTab === 'habits' ? styles.activeNav : ''}`}
+          >
+            Habits
+          </button>
+          <button
+            onClick={() => setActiveTab('calendar')}
+            className={`${styles.navItem} ${activeTab === 'calendar' ? styles.activeNav : ''}`}
+          >
+            Calendar
+          </button>
+          <button
+            onClick={() => setActiveTab('streak')}
+            className={`${styles.navItem} ${activeTab === 'streak' ? styles.activeNav : ''}`}
+          >
+            Streak
+          </button>
+          <button
+            onClick={() => setActiveTab('create')}
+            className={`${styles.navItem} ${activeTab === 'create' ? styles.activeNav : ''}`}
+          >
+            New Habit
+          </button>
+          <button
+            onClick={() => setActiveTab('friend')}
+            className={`${styles.navItem} ${activeTab === 'friend' ? styles.activeNav : ''}`}
+          >
+            Habit Friend
+          </button>
+
+          {/* ✅ Chatbot link goes to /user/chatbot */}
+          <Link href="/user/chatbot" className={styles.navItem}>
+            Chatbot
+          </Link>
         </nav>
       </aside>
       <section className={styles.content}>{renderContent()}</section>
