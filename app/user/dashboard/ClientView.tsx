@@ -1,9 +1,9 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useActionState } from 'react';
 import Link from 'next/link';
 
 import { Habit, HabitData } from './page';
-import { newHabit } from './actions';
+import { CreateHabitState, initialCreateHabitState, newHabit } from './actions';
 import styles from './page.module.css';
 
 
@@ -17,6 +17,9 @@ export default function ClientView({ data }: HabitData) {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [newTitle, setNewTitle] = useState('');
   const [newDesc, setNewDesc] = useState('');
+
+  const [createHabitState, createHabitAction, createHabitPending] =
+   useActionState<CreateHabitState, FormData>(newHabit, initialCreateHabitState)
 
 
   // EVENT HANDLERS
@@ -127,7 +130,7 @@ export default function ClientView({ data }: HabitData) {
               ))}
             </div>
 
-            <form action={newHabit} style={{ marginTop: '2rem' }}>
+            <form action={createHabitAction} style={{ marginTop: '2rem' }}>
               <input
                 type="text"
                 name="title"
@@ -146,6 +149,7 @@ export default function ClientView({ data }: HabitData) {
               <button type="submit" className={styles.addButton}>
                 ➕ Finish Custom Habit
               </button>
+              {createHabitState.error && <p>{createHabitState.error}</p>}
             </form>
           </>
         );

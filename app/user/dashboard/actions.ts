@@ -2,6 +2,14 @@
 import { verifySession } from "@/app/lib/verify";
 import { supabase } from "@/app/lib/supabase";
 import { Habit } from "./page";
+import { success } from "zod/v4";
+
+export type CreateHabitState =
+    | { hasState: false }
+    | { hasState: true, success: true }
+    | { hasState: true, success: false; error: string}
+
+export const initialCreateHabitState = { hasState: false, success: null, error: null };
 
 
 // TODO: Handle token/supabse errors
@@ -29,9 +37,9 @@ export async function fetchHabits() {
     return habits
 }
 
-export async function newHabit(e: FormData) {
+export async function newHabit(_prev: CreateHabitState, e: FormData): Promise<CreateHabitState> {
     let uuid = await verifySession()
-    if (!uuid) return
+    if (!uuid) return { hasState: true, success: false, error: "User is not logged in"}
 
     const { data, error } = await supabase.rpc("create_new_habit", {
         p_id: uuid.userId,
@@ -41,5 +49,9 @@ export async function newHabit(e: FormData) {
         p_coins: 10
     })
 
-    console.log(error)
+    if (error) {
+        return { hasState: true, success: false, error: error.cause as string }
+    }
+
+    return { hasState: true, success: true }
 }
