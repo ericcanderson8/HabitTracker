@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 
 import { Habit, HabitData } from './page';
+import { newHabit } from './actions';
 import styles from './page.module.css';
 
 
@@ -36,15 +37,6 @@ export default function ClientView({ data }: HabitData) {
       setXp(nextXp);
     }
     setCoins((prev) => prev + habit.coins);
-  };
-
-  const handleCreateCustomHabit = () => {
-    if (newTitle.trim() && newDesc.trim()) {
-      const custom = { title: newTitle, description: newDesc, coins: 5, xp: 10 };
-      setCustomHabits([...customHabits, custom]);
-      setNewTitle('');
-      setNewDesc('');
-    }
   };
 
   const renderContent = () => {
@@ -135,24 +127,26 @@ export default function ClientView({ data }: HabitData) {
               ))}
             </div>
 
-            <div style={{ marginTop: '2rem' }}>
+            <form action={newHabit} style={{ marginTop: '2rem' }}>
               <input
                 type="text"
+                name="title"
                 placeholder="Habit Title"
                 value={newTitle}
                 onChange={(e) => setNewTitle(e.target.value)}
                 className={styles.input}
               />
               <textarea
+                name="description"
                 placeholder="Habit Description"
                 value={newDesc}
                 onChange={(e) => setNewDesc(e.target.value)}
                 className={styles.textarea}
               ></textarea>
-              <button className={styles.addButton} onClick={handleCreateCustomHabit}>
+              <button type="submit" className={styles.addButton}>
                 ➕ Finish Custom Habit
               </button>
-            </div>
+            </form>
           </>
         );
       case 'friend':

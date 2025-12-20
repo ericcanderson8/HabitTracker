@@ -1,16 +1,13 @@
-import { cookies } from "next/headers"
+'use server'
 import { verifySession } from "@/app/lib/verify";
 import { supabase } from "@/app/lib/supabase";
 import { Habit } from "./page";
 
 
-
+// TODO: Handle token/supabse errors
 export async function fetchHabits() {
-    // Get user info
-    let ck = await cookies();
-    let token = ck.get("token")?.value
-    let uuid = verifySession(token)
-    if (!uuid) return
+   let uuid = await verifySession();
+   if (!uuid) return null
 
     // Get habit data
     const { data, error } = await supabase.rpc("get_user_habits", {
@@ -30,4 +27,19 @@ export async function fetchHabits() {
     }))
     
     return habits
+}
+
+export async function newHabit(e: FormData) {
+    let uuid = await verifySession()
+    if (!uuid) return
+
+    const { data, error } = await supabase.rpc("create_new_habit", {
+        p_id: uuid.userId,
+        p_title: e.get("title"),
+        p_description: e.get("description"),
+        p_xp: 10,
+        p_coins: 10
+    })
+
+    console.log(error)
 }
