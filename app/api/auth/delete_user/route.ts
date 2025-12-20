@@ -24,9 +24,7 @@ export async function POST(req: NextRequest) {
     }
 
     let response = NextResponse.json({ status: 200 })
-
-    // Remove token cookie since now invalid
-    response.cookies.delete("token")
+    response.cookies.delete("token")  // Remove token cookie since now invalid
 
     return response
 }

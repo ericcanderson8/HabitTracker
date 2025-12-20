@@ -8,9 +8,9 @@ export async function onSignInClicked()  {
     const ck = await cookies()
     const token = ck.get("token")?.value
 
-    const { verified, user } = verifySession(token)
+    const user = verifySession(token)
 
-    if (!verified) {
+    if (!user) {
         redirect("/login")
     } else {
         redirect("/user/dashboard")

@@ -10,6 +10,12 @@ export default function Page() {
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
 
+    // Validation
+    if (!data.password || !data.email) {
+      alert("Please fill out all fields")
+      return
+    }
+
     try {
       const res = await fetch('/api/auth/login', {
         method: "POST",
@@ -23,6 +29,7 @@ export default function Page() {
         case 401: break; // Handle invalid credentials
         default: break;
       }
+      
     } catch (err) {
       console.log(err);
     }
