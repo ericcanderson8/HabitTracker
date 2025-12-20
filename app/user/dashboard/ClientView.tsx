@@ -40,7 +40,7 @@ export default function ClientView({ data }: HabitData) {
 
   const handleCreateCustomHabit = () => {
     if (newTitle.trim() && newDesc.trim()) {
-      const custom = { title: newTitle, description: newDesc, coins: 5 };
+      const custom = { title: newTitle, description: newDesc, coins: 5, xp: 10 };
       setCustomHabits([...customHabits, custom]);
       setNewTitle('');
       setNewDesc('');
@@ -122,14 +122,8 @@ export default function ClientView({ data }: HabitData) {
           <>
             <h2 className={styles.sectionTitle}>➕ Create New Habit</h2>
             <div className={styles.cardGrid}>
-              {[
-                { title: 'Read 10 pages', description: 'Expand your knowledge and reduce screen time.', coins: 5 },
-                { title: 'Walk for 5 min', description: 'Boost your circulation and mental clarity.', coins: 5 },
-                { title: 'Meditate', description: 'Calm your mind and reduce anxiety.', coins: 5 },
-                { title: 'Journal', description: 'Reflect and process your thoughts in writing.', coins: 5 },
-                { title: 'Declutter 1 item', description: 'Improve your space and sense of control.', coins: 5 },
-                ...customHabits,
-              ].map((habit, i) => (
+              {
+               customHabits.map((habit, i) => (
                 <div key={i} className={styles.createHabitCard}>
                   <h4 className={styles.habitTitle}>{habit.title}</h4>
                   <p className={styles.habitDesc}>{habit.description}</p>

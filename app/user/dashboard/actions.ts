@@ -1,6 +1,7 @@
 import { cookies } from "next/headers"
 import { verifySession } from "@/app/lib/verify";
 import { supabase } from "@/app/lib/supabase";
+import { Habit } from "./page";
 
 
 
@@ -20,6 +21,13 @@ export async function fetchHabits() {
     if (error) {
         return null
     }
+
+    // Parse data
+    let habits = data as Habit[];
+    habits = habits.map((h) => ({
+        ...h,
+        coins: Number(h.coins)
+    }))
     
-    return data
+    return habits
 }
