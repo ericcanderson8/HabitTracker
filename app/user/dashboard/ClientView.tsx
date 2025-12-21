@@ -3,9 +3,10 @@ import React, { useState, useActionState } from 'react';
 import Link from 'next/link';
 
 import { Habit, HabitData } from './page';
-import { CreateHabitState, initialCreateHabitState, newHabit } from './actions';
+import { CreateHabitState, newHabit } from './actions';
 import styles from './page.module.css';
 
+const initialCreateHabitState: CreateHabitState = { hasState: false };
 
 export default function ClientView({ data }: HabitData) {
   const [activeTab, setActiveTab] = useState<'habits' | 'calendar' | 'streak' | 'create' | 'friend'>('habits');
@@ -20,7 +21,6 @@ export default function ClientView({ data }: HabitData) {
 
   const [createHabitState, createHabitAction, createHabitPending] =
    useActionState<CreateHabitState, FormData>(newHabit, initialCreateHabitState)
-
 
   // EVENT HANDLERS
   const handleAddHabit = (habit: Habit) => {
@@ -149,7 +149,9 @@ export default function ClientView({ data }: HabitData) {
               <button type="submit" className={styles.addButton}>
                 ➕ Finish Custom Habit
               </button>
-              {createHabitState.error && <p>{createHabitState.error}</p>}
+              
+
+
             </form>
           </>
         );

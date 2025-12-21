@@ -2,14 +2,11 @@
 import { verifySession } from "@/app/lib/verify";
 import { supabase } from "@/app/lib/supabase";
 import { Habit } from "./page";
-import { success } from "zod/v4";
 
 export type CreateHabitState =
     | { hasState: false }
     | { hasState: true, success: true }
     | { hasState: true, success: false; error: string}
-
-export const initialCreateHabitState = { hasState: false, success: null, error: null };
 
 
 // TODO: Handle token/supabse errors
