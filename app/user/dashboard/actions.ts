@@ -9,9 +9,6 @@ export type CreateHabitState =
     | { hasState: true, success: true }
     | { hasState: true, success: false; error: string}
 
-export const initialCreateHabitState = { hasState: false, success: null, error: null };
-
-
 // TODO: Handle token/supabse errors
 export async function fetchHabits() {
    let uuid = await verifySession();

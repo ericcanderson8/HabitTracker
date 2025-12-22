@@ -1,4 +1,4 @@
-import ClientView from "./ClientView";
+import Dashboard from "./Dashboard";
 import { fetchHabits } from "./actions";
 
 export type Habit = {
@@ -8,12 +8,24 @@ export type Habit = {
   coins: number;
 }
 
-export type HabitData = {
-    data: Habit[]
+export type UserData = {
+  name: string
+  xp: number
+  level: number
+  coins: number
+  habits: Habit[]
 }
 
 export default async function Page() {
     let data = await fetchHabits();
+    if (!data) return
+    let userData: UserData = {
+      name: "Name",
+      xp: 23,
+      level: 3,
+      coins: 55,
+      habits: data
+    }
     if (!data) data = []
-    return <ClientView data={data}/>
+    return <Dashboard user={userData}/>
 }
