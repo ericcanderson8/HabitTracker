@@ -2,7 +2,6 @@
 import { verifySession } from "@/app/lib/verify";
 import { supabase } from "@/app/lib/supabase";
 import { Habit } from "./page";
-import { success } from "zod/v4";
 
 export type CreateHabitState =
     | { hasState: false }
