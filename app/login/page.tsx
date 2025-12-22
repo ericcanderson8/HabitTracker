@@ -1,12 +1,10 @@
 'use client';
-import styles from './page.module.css';
 import { LoginState, loginClicked } from './actions';
 import { useActionState } from 'react';
-
-const initialLoginState: LoginState = { status: "idle" }
+import ErrorBar from '../components/errorbar';
 
 export default function Page() {
-  let [loginState, loginAction, loginPending] = useActionState(loginClicked, initialLoginState)
+  let [loginState, loginAction, loginPending] = useActionState(loginClicked, { status: "idle" })
 
   return (
     <main
@@ -54,10 +52,7 @@ export default function Page() {
         </p>
 
         {loginState.status === "error" && loginState.error && (
-        <div className={styles.errorBox} role="alert">
-          <strong className={styles.errorTitle}>❌</strong>
-          <span className={styles.errorText}>{loginState.error}</span>
-        </div>
+          <ErrorBar message={loginState.error} />
         )}
 
         <form action={loginAction}>

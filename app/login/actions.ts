@@ -63,7 +63,7 @@ export async function loginClicked(_prev: LoginState, e: FormData): Promise<Logi
         }
     } catch (error) {
         console.log(error)
-        return { status: "error", error: "Aaaah!"}
+        return { status: "error", error: "An unexpected server error has occured"}
     }
 
 }

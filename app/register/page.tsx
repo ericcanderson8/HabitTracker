@@ -1,32 +1,11 @@
 'use client';
-import React from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useActionState } from 'react';
+
+import { onRegisterClicked } from './actions';
+import ErrorBar from '../components/errorbar';
 
 export default function RegisterPage() {
-  const router = useRouter();
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // Get form data
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-
-    // HTTP request
-    const res = await fetch('/api/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-
-    if (res.ok) {
-      alert("Account created successfully!");
-      router.push("/login");
-    } else {
-      const error = await res.json();
-      alert(error.message || "Error creating account. Please try again.");
-    }
-  };
+  const [registerState, registerAction, registerPending] = useActionState(onRegisterClicked, { status: "idle" })
 
   return (
     <main
@@ -63,7 +42,11 @@ export default function RegisterPage() {
           Create Your Account
         </h1>
 
-        <form onSubmit={handleSubmit}>
+        {registerState.status === "error" && registerState.error && (
+          <ErrorBar message={registerState.error} />
+        )}
+
+        <form action={registerAction}>
           <label style={styles.label}>First Name</label>
           <input name="firstName" type="text" required style={styles.input} />
 
@@ -76,7 +59,9 @@ export default function RegisterPage() {
           <label style={styles.label}>Password</label>
           <input name="password" type="password" required style={styles.input} />
 
-          <button type="submit" style={styles.submitButton}>Sign Up</button>
+          <button type="submit" style={styles.submitButton}>
+            { registerPending ? "Validating..." : "Submit"}
+          </button>
 
           <p style={{ fontSize: '0.85rem', color: '#8B949E', marginTop: '1.5rem', textAlign: 'center' }}>
             Already have an account?{' '}
