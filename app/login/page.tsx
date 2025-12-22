@@ -1,39 +1,12 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import styles from './page.module.css';
+import { LoginState, loginClicked } from './actions';
+import { useActionState } from 'react';
+
+const initialLoginState: LoginState = { status: "idle" }
 
 export default function Page() {
-  const router = useRouter();
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-
-    // Validation
-    if (!data.password || !data.email) {
-      alert("Please fill out all fields")
-      return
-    }
-
-    try {
-      const res = await fetch('/api/auth/login', {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-
-      switch (res.status) {
-        case 200: router.push("/user/dashboard"); break;
-        case 400: break; // Handle missing field
-        case 401: break; // Handle invalid credentials
-        default: break;
-      }
-      
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  let [loginState, loginAction, loginPending] = useActionState(loginClicked, initialLoginState)
 
   return (
     <main
@@ -75,13 +48,19 @@ export default function Page() {
           style={{
             color: '#8B949E',
             fontSize: '0.95rem',
-            marginBottom: '2rem',
           }}
         >
           Keep going — your next 1-minute habit is just a click away.
         </p>
 
-        <form onSubmit={handleSubmit}>
+        {loginState.status === "error" && loginState.error && (
+        <div className={styles.errorBox} role="alert">
+          <strong className={styles.errorTitle}>❌</strong>
+          <span className={styles.errorText}>{loginState.error}</span>
+        </div>
+        )}
+
+        <form action={loginAction}>
           {/* Email */}
           <div style={{ marginBottom: '1.5rem', textAlign: 'left' }}>
             <label
@@ -178,7 +157,7 @@ export default function Page() {
             onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#0056b3')}
             onMouseOut={(e) => (e.currentTarget.style.backgroundColor = '#007BFF')}
           >
-            Sign In
+            {loginPending ? "Validating..." : "Submit"}
           </button>
         </form>
 

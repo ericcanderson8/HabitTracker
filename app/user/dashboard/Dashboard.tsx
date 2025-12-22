@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, } from 'react';
+import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
 
 import { UserData } from './page';
@@ -10,14 +10,18 @@ import CreateHabit from './CreateHabit';
 
 export type SetState<T> = React.Dispatch<React.SetStateAction<T>>
 
-export default function Dashboard({ user }: { user: UserData }) {
+export default function Page({ user }: { user: UserData }) {
   const [userData, setUserData] = useState<UserData>(user)
   const [activeTab, setActiveTab] = useState<'habits' | 'calendar' | 'create' | 'friend'>('habits');
 
   const renderContent = () => {
     switch (activeTab) {
       case 'habits':
-        return <Habits userData={userData} setUserData={setUserData} />
+        return (<>
+          <Suspense fallback={(<p>Loading</p>)}>
+            <Habits userData={userData} setUserData={setUserData} />
+          </Suspense>
+        </>)
       case 'calendar':
         return <Calender />
       case 'create':
