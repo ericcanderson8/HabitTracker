@@ -19,6 +19,8 @@ export type UserData = {
 export default async function Page() {
     let data = await fetchHabits();
     if (!data) return
+
+    // TODO: Store user's coins, level etc and retrieve them
     let userData: UserData = {
       name: "Name",
       xp: 23,

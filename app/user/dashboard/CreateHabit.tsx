@@ -1,19 +1,27 @@
 'use client'
-import { useState } from 'react';
+import { useActionState, useState } from 'react';
 
 import { SetState } from './Dashboard';
 import { UserData, Habit } from './page';
+import { newHabit, CreateHabitState } from './actions';
 import styles from './page.module.css';
+
+const initialCreateHabitState: CreateHabitState = { hasState: false };
 
 export default function CreateHabit({ userData, setUserData }: { userData: UserData, setUserData: SetState<UserData> }) {
     const [newTitle, setNewTitle] = useState('');
     const [newDesc, setNewDesc] = useState('');
+    const [newHabitState, newHabitAction, newHabitPending] = useActionState(newHabit, initialCreateHabitState);
 
     const handleAddHabit = (habit: Habit) => {
-        if (!userData.habits.find((h) => h.title === habit.title)) {
-            userData.habits = [...userData.habits, habit];
-            setUserData(userData)
-        }
+        console.log("works")
+        setUserData(prev => {
+            if (!prev.habits.find((h) => h.title === habit.title)) {
+                let habits = [...prev.habits, habit];
+                return { ...prev, habits }
+            }
+            return prev
+        })
     };
 
     return (
@@ -33,7 +41,7 @@ export default function CreateHabit({ userData, setUserData }: { userData: UserD
                     ))}
             </div>
 
-            <form style={{ marginTop: '2rem' }}>
+            <form style={{ marginTop: '2rem' }} action={newHabitAction}>
                 <input
                     type="text"
                     name="title"
