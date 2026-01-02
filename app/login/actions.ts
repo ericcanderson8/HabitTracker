@@ -56,6 +56,7 @@ export async function loginClicked(_prev: LoginState, e: FormData): Promise<Logi
                 path: '/',
                 maxAge: 7 * 60 * 60 * 24, // 7 days
             })
+            
         } else {
             // Passwords do not match
             return { status: "error", error: "Passwords do not match" }
