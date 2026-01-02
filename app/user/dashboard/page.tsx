@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import Dashboard from "./Dashboard";
-import { fetchHabits } from "./actions";
+import { fetchUserData } from "./actions";
 import styles from './page.module.css';
 
 export type Habit = {
@@ -11,7 +11,6 @@ export type Habit = {
 }
 
 export type UserData = {
-  name: string
   xp: number
   level: number
   coins: number
@@ -22,20 +21,9 @@ export default async function Page() {
   return (
     <Suspense fallback={<Loading />}>
       {(async () => {
-        let data = await fetchHabits();
-        if (!data) return
-
-        // TODO: Store user's coins, level etc and retrieve them
-        let userData: UserData = {
-          name: "Name",
-          xp: 23,
-          level: 3,
-          coins: 55,
-          habits: data
-        }
-
-        if (!data) data = []
-        return <Dashboard user={userData} />
+        let data = await fetchUserData();
+        if (!data) return <p>Error</p>
+        return <Dashboard user={data} />
       })()}
     </Suspense>
   )

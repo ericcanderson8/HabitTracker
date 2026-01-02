@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-
 import jwt from 'jsonwebtoken'
 
-export function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const url = req.nextUrl;
 
   // If on a user page, make sure a user session is active
@@ -29,7 +28,6 @@ export function middleware(req: NextRequest) {
 
 
 export const config = {
-  runtime: "nodejs",
   matcher: [
     '/user/:path*',
     '/api/:path*',

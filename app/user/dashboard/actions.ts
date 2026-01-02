@@ -4,38 +4,50 @@ import { supabase } from "@/app/lib/supabase";
 import { Habit } from "./page";
 
 export type CreateHabitState =
-    | { hasState: false }
-    | { hasState: true, success: true }
-    | { hasState: true, success: false; error: string}
+    | { status: "idle" }
+    | { status: "success" }
+    | { status: "error", error: string }
 
 // TODO: Handle token/supabse errors
-export async function fetchHabits() {
+export async function fetchUserData() {
    let uuid = await verifySession();
    if (!uuid) return null
 
+   // Get user data
+   let userDataList = (await supabase.rpc("get_user_data", {
+    p_userid: uuid.userId
+   }))
+   let userData = userDataList.data[0]
+
     // Get habit data
-    const { data, error } = await supabase.rpc("get_user_habits", {
+    let userHabits = await supabase.rpc("get_user_habits", {
         p_userid: uuid.userId
     })
-
-    // Handle Postgres error
-    if (error) {
-        return null
+    if (userData.error || userHabits.error) {
+        console.log(userDataList.error)
+        console.log(userHabits.error)
+        return 
     }
 
     // Parse data
-    let habits = data as Habit[];
+    let habits = userHabits.data as Habit[];
     habits = habits.map((h) => ({
         ...h,
         coins: Number(h.coins)
     }))
     
-    return habits
+    
+    return {
+        xp: userData.xp,
+        level: userData.level,
+        coins: userData.coins,
+        habits,
+    }
 }
 
 export async function newHabit(_prev: CreateHabitState, e: FormData): Promise<CreateHabitState> {
     let uuid = await verifySession()
-    if (!uuid) return { hasState: true, success: false, error: "User is not logged in"}
+    if (!uuid) return { status: "error", error: "User is not logged in"}
 
     const { data, error } = await supabase.rpc("create_new_habit", {
         p_id: uuid.userId,
@@ -46,8 +58,8 @@ export async function newHabit(_prev: CreateHabitState, e: FormData): Promise<Cr
     })
 
     if (error) {
-        return { hasState: true, success: false, error: error.cause as string }
+        return { status: "error", error: error.cause as string }
     }
 
-    return { hasState: true, success: true }
+    return { status: "success" }
 }

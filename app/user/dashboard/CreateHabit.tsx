@@ -6,15 +6,12 @@ import { UserData, Habit } from './page';
 import { newHabit, CreateHabitState } from './actions';
 import styles from './page.module.css';
 
-const initialCreateHabitState: CreateHabitState = { hasState: false };
-
 export default function CreateHabit({ userData, setUserData }: { userData: UserData, setUserData: SetState<UserData> }) {
     const [newTitle, setNewTitle] = useState('');
     const [newDesc, setNewDesc] = useState('');
-    const [newHabitState, newHabitAction, newHabitPending] = useActionState(newHabit, initialCreateHabitState);
+    const [newHabitState, newHabitAction, newHabitPending] = useActionState(newHabit, { status: "idle" });
 
     const handleAddHabit = (habit: Habit) => {
-        console.log("works")
         setUserData(prev => {
             if (!prev.habits.find((h) => h.title === habit.title)) {
                 let habits = [...prev.habits, habit];
